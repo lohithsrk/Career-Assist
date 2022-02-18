@@ -2,8 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const { get } = require('../controller/assessment.controller');
+const {
+	questionsClientGet,
+	questionsAdminGet
+} = require('../controller/assessment.controller');
 
-router.route('/').get(get);
+router.route('/admin/').post(questionsAdminGet);
+router.route('/client/:extraSubject').get(questionsClientGet);
 
 module.exports = router;
