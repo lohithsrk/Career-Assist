@@ -4,7 +4,17 @@ const express = require('express');
 
 const app = express();
 
+const db = require('./database');
+
 const assessmentRoute = require('./route/assessment.route');
+
+db.connect((err) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('Mysql connected');
+	}
+});
 
 app.use('/assessment', assessmentRoute);
 
