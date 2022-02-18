@@ -1,0 +1,21 @@
+{
+	"name": "career-assist",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"client": "cd client && npm start",
+		"server": "cd server && npm run nodemon"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lohithsrk/Career-Assist.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/lohithsrk/Career-Assist/issues"
+	},
+	"homepage": "https://github.com/lohithsrk/Career-Assist#readme"
+}
