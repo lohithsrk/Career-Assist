@@ -7,7 +7,7 @@ const app = express();
 const db = require('./database');
 
 const assessmentRoute = require('./route/assessment.route');
-
+const registerRoute = require('./route/register.route');
 db.connect((err) => {
 	if (err) {
 		console.log(err);
@@ -17,7 +17,7 @@ db.connect((err) => {
 });
 
 app.use('/assessment', assessmentRoute);
-
+app.use('/',registerRoute);
 app.listen(process.env.PORT, () =>
 	console.log(`Server is running on port ${process.env.PORT}`)
 );
