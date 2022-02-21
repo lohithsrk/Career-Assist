@@ -1,8 +1,6 @@
-const db = require('../database');
+const db = require('../../database');
 
-const questionsClientGet = async (req, res) => {
-	const extraSubject = req.params.extraSubject;
-
+const questionsAdminGet = async (req, res) => {
 	const physics = [];
 	await db.query('SELECT * FROM Physics', (request, responses) => {
 		responses.forEach((response) => {
@@ -37,12 +35,13 @@ const questionsClientGet = async (req, res) => {
 			computer.push(response);
 		});
 	});
-	res.json([
-		physics,
-		chemistry,
-		maths,
-		extraSubject == 'biology' ? biology : computer
-	]);
+	res.json([physics, chemistry, maths, biology, computer]);
 };
 
-module.exports = { questionsClientGet };
+const questionsAdminPost = async (req, res) => {
+	const subject = req.query.subject;
+
+	await db.query(`INSERT INTO ${subject} SET ?`, req.body.subject);
+};
+
+module.exports = { questionsClientGet, questionsAdminGet, questionsAdminPost };
