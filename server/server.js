@@ -1,12 +1,16 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const express = require('express');
 
 const app = express();
 
+app.use(express.json());
+
 const db = require('./database');
 
-const assessmentRoute = require('./route/assessment.route');
+const registerRoute = require('./route/register.route');
+const assessmentClientRoute = require('./route/assessmentClient.route');
+const assessmentAdminRoute = require('./route/admin/assessmentAdmin.route');
 
 db.connect((err) => {
 	if (err) {
@@ -16,7 +20,10 @@ db.connect((err) => {
 	}
 });
 
-app.use('/assessment', assessmentRoute);
+
+app.use('/',registerRoute);
+app.use('/assessment', assessmentClientRoute);
+app.use('/assessment/admin/', assessmentAdminRoute);
 
 app.listen(process.env.PORT, () =>
 	console.log(`Server is running on port ${process.env.PORT}`)
