@@ -20,9 +20,8 @@ db.connect((err) => {
 	}
 });
 
-
-app.use('/',registerRoute);
-app.use('/assessment', assessmentClientRoute);
+app.use('/', registerRoute);
+app.use('/assessment/client/', assessmentClientRoute);
 app.use('/assessment/admin/', assessmentAdminRoute);
 
 app.listen(process.env.PORT, () =>
