@@ -11,6 +11,8 @@ const { questionsDB, db } = require('./database');
 const registerRoute = require('./route/register.route');
 const assessmentClientRoute = require('./route/assessmentClient.route');
 const assessmentAdminRoute = require('./route/admin/assessmentAdmin.route');
+const reviewRoute = require('./route/review.route');
+const contactRoute = require('./route/contact.route');
 
 questionsDB.connect((err) => {
 	if (err) {
@@ -31,6 +33,8 @@ db.connect((err) => {
 app.use('/', registerRoute);
 app.use('/assessment/client/', assessmentClientRoute);
 app.use('/assessment/admin/', assessmentAdminRoute);
+app.use('/review/', reviewRoute);
+app.use('/contact/', contactRoute);
 
 app.listen(process.env.PORT, () =>
 	console.log(`Server is running on port ${process.env.PORT}`)

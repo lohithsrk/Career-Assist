@@ -1,4 +1,4 @@
-const db = require('../database');
+const {db} = require('../database');
 
 const questionsClientGet = async (req, res) => {
 	const { extraSubject, jeeMark, boardMark } = req.query;
