@@ -4,18 +4,11 @@ function RegisterEmailComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [formexpanded, setFormexpanded] = useState(false);
   // const [array, setArray] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-	// const user = {
-	// 	username: username,
-	// 	password: password,
-	// 	email: email,
-	// }
-	// setArray(array.concat(user));
-	// console.log(array);
   };
 
   return (
@@ -44,29 +37,37 @@ function RegisterEmailComponent() {
           />
         </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        {formexpanded === true ? (
+          <>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="confirm_password">Confirm Password</label>
-          <input
-            type="password"
-            name="confirm_password"
-            id="confirm_password"
-          />
-        </div>
+            <div>
+              <label htmlFor="confirm_password">Confirm Password</label>
+              <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+              />
+            </div>
+          </>
+        ) : null}
 
-        <div>
-          <button onSubmit={handleSubmit}>Register</button>
-        </div>
+        {formexpanded === false ? (
+          <>
+            <div>
+              <button onSubmit={handleSubmit}>Register</button>
+            </div>
+          </>
+        ) : null}
       </form>
     </div>
   );
