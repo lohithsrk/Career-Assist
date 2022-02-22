@@ -7,8 +7,8 @@ function Register() {
   return (
     <>
       <RegisterPhoneComponent />
-      {/* <RegisterEmailComponent />
-      <RegisterSocialComponent /> */}
+      <RegisterEmailComponent />
+      <RegisterSocialComponent />
     </>
   );
 }
