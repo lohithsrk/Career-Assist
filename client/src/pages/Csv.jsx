@@ -1,18 +1,23 @@
 import React,{useState,useEffect} from 'react'
+import { fileUpload } from '../axios/admin/csv.axios';
 const Papa = require('papaparse');
 const Csv = () => {
-    const [csv,setCsv] = useState();
-    useEffect(() => {
-        if(csv) {
-            console.log(csv);
-        }
-    }, [csv])
+    // const [csv,setCsv] = useState();
+    // useEffect(() => {
+    //     if(csv) {
+    //         console.log(csv);
+    //     }
+    // }, [csv])
     const handleChange = (e) => {
         Papa.parse(e.target.files[0], {
             header: true,
             complete: function(results) {
-                console.log(results);
-                setCsv(results.data);
+                fileUpload(results.data).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(err);
+                })
+                
             }
         });
         
