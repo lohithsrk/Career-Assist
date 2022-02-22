@@ -6,9 +6,9 @@ import RegisterSocialComponent from "../components/RegisterSocialComponent";
 function Register() {
   return (
     <>
-      {/* <RegisterPhoneComponent />
-      <RegisterEmailComponent /> */}
-      <RegisterSocialComponent />
+      <RegisterPhoneComponent />
+      {/* <RegisterEmailComponent />
+      <RegisterSocialComponent /> */}
     </>
   );
 }
