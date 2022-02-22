@@ -50,9 +50,10 @@ const questionsAdminPost = async (req, res) => {
 		option4,
 		category,
 		topic,
-		answer
+		answer,
+		description
 	} = req.body;
-	console.log(req.body);
+
 	await db.query(
 		`INSERT INTO ${subject} SET ?`,
 		{
@@ -64,7 +65,8 @@ const questionsAdminPost = async (req, res) => {
 			option4,
 			category,
 			topic,
-			answer
+			answer,
+			description
 		},
 		(err, result) => {
 			if (err) {
@@ -87,7 +89,8 @@ const questionsAdminPut = async (req, res) => {
 		option4,
 		category,
 		topic,
-		answer
+		answer,
+		description
 	} = req.body;
 
 	await db.query(
@@ -101,7 +104,8 @@ const questionsAdminPut = async (req, res) => {
 			option4,
 			category,
 			topic,
-			answer
+			answer,
+			description
 		},
 		(err, result) => {
 			if (err) {
