@@ -1,41 +1,43 @@
-const { db }= require("../../database");
+const { db } = require("../../database");
 var validator = require("validator");
-const errorData = [];
-//validator
-const emailValidator = (data) => {
-  if (validator.isEmail(data["email"])) {
-    phoneValidator(data);
-    return true;
-  } else {
-    errorData.push(data);
+const nodemailer = require("nodemailer");
 
-    return false;
-  }
-};
 
-const phoneValidator = (data) => {
-  if (validator.isMobilePhone(data["phone"], "en-IN")) {
-    nameValidator(data);
-    return true;
-  } else {
-    errorData.push(data);
-
-    return false;
-  }
-};
-
-const nameValidator = (data) => {
-  if (validator.isNumeric(data["name"])) {
-    errorData.push(data);
-
-    return false;
-  } else {
-    return true;
-  }
-};
 exports.csvParse = async (req, res) => {
   const { csv } = req.body;
+  const errorData = [];
+  //validator
+  const emailValidator = (data) => {
+    if (validator.isEmail(data["email"])) {
+      phoneValidator(data);
+      return true;
+    } else {
+      errorData.push(data);
 
+      return false;
+    }
+  };
+
+  const phoneValidator = (data) => {
+    if (validator.isMobilePhone(data["phone"], "en-IN")) {
+      nameValidator(data);
+      return true;
+    } else {
+      errorData.push(data);
+
+      return false;
+    }
+  };
+
+  const nameValidator = (data) => {
+    if (validator.isNumeric(data["name"])) {
+      errorData.push(data);
+
+      return false;
+    } else {
+      return true;
+    }
+  };
   csv.forEach((data) => {
     var email = data["email"];
     var phone = data["phone"];
@@ -51,17 +53,6 @@ exports.csvParse = async (req, res) => {
     }
   });
   var newcsv = [];
-  // errorData.forEach((ed) => {
-  //   csv.forEach((c) => {
-  //     if (
-  //       c["email"] !== ed["email"] &&
-  //       c["phone"] !== ed["phone"] &&
-  //       c["name"] !== ed["name"]
-  //     ) {
-  //       newcsv.push(c);
-  //     }
-  //   });
-  // });
   newcsv = csv.filter((c) => {
     return !errorData.some((ed) => {
       return (
@@ -72,23 +63,70 @@ exports.csvParse = async (req, res) => {
     });
   });
 
-  console.log(csv, "csv");
   console.log(newcsv, "newcsv");
   var json = JSON.stringify(newcsv);
   db.query(
     "INSERT INTO BulkEmailRegistration SET ?",
-    {userid:0, date: Date.now(), userdata: json },
+    { userid: 0, date: new Date(), userdata: json },
     (err, results) => {
-      if(err)
-      {
+      if (err) {
         console.log(err);
-      }  else {
+      } else {
         console.log(results);
         res.json({
-          message: "csv added successfully"
-          // results: results.insertId,
+          message: "csv added successfully",
+          results: results.insertId,
         });
       }
     }
   );
+};
+exports.bulkEmail = async (req, res) => {
+  // const { id } = req.body;
+  db.query('SELECT userdata from BulkEmailRegistration WHERE id = ?',[1], (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      var data = JSON.parse(results[0].userdata);
+      var emails = [];
+      data.forEach((d) => {
+        emails.push(d["email"]);
+      });
+      console.log(data,emails);
+      // res.json(results);
+      async function main() {
+        console.log('main');
+        
+        let transporter = nodemailer.createTransport({
+          // true for 465, false for other ports\
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure:true,
+          auth: {
+            user: process.env.MAILNAME, // generated ethereal user
+            pass: process.env.MAILPASS, // generated ethereal password
+          },
+        });
+      
+        
+        console.log(...emails);
+        let info = await transporter.sendMail({
+          from: process.env.MAILNAME, // sender address
+          to: emails, // list of receivers
+          subject: "Hello ✔", // Subject line
+          text: "Hello world?", // plain text body
+          html: "<b>Hello world?</b>", // html body
+        });
+      
+        console.log("Message sent: %s", info.messageId);
+      
+        // Preview only available when sending through an Ethereal account
+        // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+      }
+      
+      main().catch(console.error);
+      
+    }
+  })
 };
