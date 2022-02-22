@@ -113,7 +113,6 @@ const questionsAdminPut = async (req, res) => {
 };
 
 const questionsAdminDelete = async (req, res) => {
-	console.log(req.query);
 	const { subject, id } = req.query;
 	await db.query(`DELETE FROM ${subject} WHERE id = ${id}`, (err, result) => {
 		if (err) {

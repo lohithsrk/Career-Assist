@@ -6,6 +6,6 @@ const {
 	questionsClientGet
 } = require('../controller/assessmentClient.controller');
 
-router.route('/client/:extraSubject').get(questionsClientGet);
+router.route('/').get(questionsClientGet);
 
 module.exports = router;
