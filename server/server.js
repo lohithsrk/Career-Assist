@@ -6,23 +6,30 @@ const app = express();
 
 app.use(express.json());
 
-const db = require('./database');
+const { questionsDB, db } = require('./database');
 
 const registerRoute = require('./route/register.route');
 const assessmentClientRoute = require('./route/assessmentClient.route');
 const assessmentAdminRoute = require('./route/admin/assessmentAdmin.route');
 
+questionsDB.connect((err) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('Questions DB connected');
+	}
+});
+
 db.connect((err) => {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log('Mysql connected');
+		console.log('Database connected');
 	}
 });
 
-
-app.use('/',registerRoute);
-app.use('/assessment', assessmentClientRoute);
+app.use('/', registerRoute);
+app.use('/assessment/client/', assessmentClientRoute);
 app.use('/assessment/admin/', assessmentAdminRoute);
 
 app.listen(process.env.PORT, () =>
