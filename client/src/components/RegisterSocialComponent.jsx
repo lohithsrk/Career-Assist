@@ -1,21 +1,23 @@
 import React from "react";
-import { facebookProvider } from "../config/authMethods";
-import { googleProvider } from "../config/authMethods";
-import socialMediaAuth from "../service/auth";
+import { authentication } from "../firebase-config";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 function RegisterSocialComponent() {
-
-    const handleOnClick = async(provider) => {
-        const res = await socialMediaAuth(provider);
-        console.log(res);
-    }
-
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
       <h1>RegisterSocialComponent</h1>
-      <button onClick={() => handleOnClick(facebookProvider)}>Facebook</button>
-      <button onClick={() => handleOnClick(googleProvider)}>Google</button>
+      <button onClick={signInWithGoogle}>Sign in with Google</button>
     </div>
   );
 }
