@@ -83,7 +83,7 @@ exports.csvParse = async (req, res) => {
 };
 exports.bulkEmail = async (req, res) => {
   // const { id } = req.body;
-  db.query('SELECT userdata from BulkEmailRegistration WHERE id = ?',[1], (err, results) => {
+  db.query('SELECT userdata from BulkEmailRegistration WHERE id = ?',[5], (err, results) => {
     if (err) {
       console.log(err);
     } else {
