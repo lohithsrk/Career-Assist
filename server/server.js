@@ -7,18 +7,26 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 
-const db = require('./database');
+const { questionsDB, db } = require('./database');
 
 const registerRoute = require('./route/register.route');
 const csvRoute = require('./route/admin/csv.route');
 const assessmentClientRoute = require('./route/assessmentClient.route');
 const assessmentAdminRoute = require('./route/admin/assessmentAdmin.route');
 
+questionsDB.connect((err) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log('Questions DB connected');
+	}
+});
+
 db.connect((err) => {
 	if (err) {
 		console.log(err);
 	} else {
-		console.log('Mysql connected');
+		console.log('Database connected');
 	}
 });
 
