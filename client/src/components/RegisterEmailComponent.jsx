@@ -9,6 +9,10 @@ function RegisterEmailComponent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('====================================');
+    console.log('username: ', username);
+    console.log('email: ', email);
+    console.log('====================================');
   };
 
   return (
