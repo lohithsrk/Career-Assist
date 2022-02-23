@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { fileUpload } from '../axios/admin/csv.axios';
+import { fileUpload } from '../../axios/admin/csv.axios';
 const Papa = require('papaparse');
 const Csv = () => {
     // const [csv,setCsv] = useState();
