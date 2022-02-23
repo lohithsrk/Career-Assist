@@ -32,10 +32,13 @@ exports.csvParse = async (req, res) => {
   const nameValidator = (data) => {
     if (validator.isNumeric(data["name"])) {
       errorData.push(data);
-
+      
       return false;
+
     } else {
+
       return true;
+
     }
   };
   csv.forEach((data) => {
@@ -93,36 +96,30 @@ exports.bulkEmail = async (req, res) => {
         emails.push(d["email"]);
       });
       console.log(data,emails);
-      // res.json(results);
+
       async function main() {
         console.log('main');
         
         let transporter = nodemailer.createTransport({
-          // true for 465, false for other ports\
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure:true,
+ 
+          service: 'gmail',
           auth: {
             user: process.env.MAILNAME, // generated ethereal user
             pass: process.env.MAILPASS, // generated ethereal password
           },
         });
-      
+        
         
         console.log(...emails);
         let info = await transporter.sendMail({
-          from: process.env.MAILNAME, // sender address
-          to: emails, // list of receivers
-          subject: "Hello ✔", // Subject line
-          text: "Hello world?", // plain text body
-          html: "<b>Hello world?</b>", // html body
+          from: process.env.MAILNAME,
+          to: "a@gmail.com", 
+          subject: "Hello ✔", 
+          text: "Hello world?", 
+          html: "<b>Hello world?</b>",
         });
       
-        console.log("Message sent: %s", info.messageId);
-      
-        // Preview only available when sending through an Ethereal account
-        // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+        console.log("Message sent: %s", info);
       }
       
       main().catch(console.error);
