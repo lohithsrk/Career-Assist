@@ -34,7 +34,6 @@ db.connect((err) => {
 app.use('/',registerRoute);
 app.use('/',csvRoute);
 app.use('/assessment', assessmentClientRoute);
-app.use('/', registerRoute);
 app.use('/assessment/client/', assessmentClientRoute);
 app.use('/assessment/admin/', assessmentAdminRoute);
 

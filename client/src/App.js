@@ -1,5 +1,5 @@
 import React from 'react';
-import Register from "./pages/register";
+import Register from "./pages/Register";
 import Csv from './pages/Csv';
 import { Routes, Route } from 'react-router-dom';
 
