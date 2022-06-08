@@ -92,7 +92,17 @@ const questionsClientGet = async (req, res) => {
 };
 
 const questionsClientPost = async (req, res) => {
-	
+	const { physics, chemistry, maths, extraSubject, softskill, userID } =
+		req.body;
+
+	await questionsDB.query(
+		`INSERT INTO assessmentMark SET ?`,
+		{ physics, chemistry, maths, extraSubject, softskill, userID },
+		(err, result) => {
+			if (err) console.log(err);
+			res.json(result);
+		}
+	);
 };
 
 module.exports = { questionsClientGet, questionsClientPost };
